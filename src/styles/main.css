@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=La+Belle+Aurore&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #fde2e4;
+  color: white;
+  font-family: "La Belle Aurore", cursive;
+  font-size: 2rem;
+}
+
+.container {
+    width: 95%;
+    margin: 0 auto;
+}
+
+/* setting my own margin on headers */
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+}
+
+
+.header {
+  display: flex;
+  margin: 0 auto;
+  padding: 0.5em;
+  position: absolute;
+  z-index: 2;
+}
+
+.header__title {
+  margin-right: 0.5em;
+  font-weight: 500;
+}
+
+.header__list {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header__list__item {
+  margin: 0 0.25em;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  margin-top: 7em;
+  width: 100%;
+  gap: 1em;
+}
+
+.section__content {
+    font-size: 1.25em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.section__list {
+    font-size: 1.25em;
+    list-style: none;
+    padding: 0;
+}
+
+.carousel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: .5em;
+    background: #fad2e1;
+    border-radius: .5em;
+    max-width: 750px;
+    height: 550px;
+}
+
+.carousel__item {
+    display: none;
+    max-height: 500px;
+    max-width: 95%;
+}
+
+.carousel__button {
+    color: white;
+    background: transparent;
+    border: none;
+    font-size: 1.5em;
+    
+}
+.carousel__button:hover {
+    cursor: pointer;
+}
+
+.carousel__item--selected {
+    display: inline-block;
+    margin: 0 2.5% 0 2.5%;
+    z-index: 1;
+}
+
+@media (min-width: 800px) {
+    .section__content {
+        flex: 1;
+    }
+    .carousel {
+        /* min-width: 400px;  */
+        flex: 1;
+        max-width: 50%;
+    }
+    .section {
+        flex-direction: row;
+    }
+  .section:nth-of-type(2n) {
+    flex-direction: row-reverse;
+  }
+}
