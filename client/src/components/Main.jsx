@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Section from "./Section";
+import Messages from "./Messages";
 
 export default function Main() {
   //base url for image paths
@@ -20,6 +21,7 @@ export default function Main() {
   
   return (
     <main className="main">
+      <Messages />
       <Section images={imgs.carousel1}>
         <ul className="section__list">
           <li className="section__list__item">Nathan Loves Jenna</li>

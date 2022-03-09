@@ -30,7 +30,7 @@ h5 {
   display: flex;
   margin: 0 auto;
   padding: 0.5em;
-  position: absolute;
+  /* position: absolute; */
   z-index: 2;
 }
 
@@ -57,10 +57,62 @@ h5 {
     flex-direction: column;
 }
 
+.messages {
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+}
+
+.message__content {
+  font-size: 1.25em;
+}
+
+.message__input {
+  width: 90%;
+  min-height: 5em;
+  margin: 0 auto;
+  margin-bottom: 1em;
+  border: none;
+  font-size: .65em;
+  font-weight: 500;
+  padding: .2em .4em;
+  text-align: center;
+  border-radius: .25em;
+  color: white;
+  background: #fad2e1;
+  border: 2px solid white;
+  resize: none;
+  display: block;
+}
+
+.message__button {
+  padding: .5em .6em;
+  font-size: .75em;
+  border-radius: .5em;
+  border: 2px solid white;
+  color: white;
+  background: #fad2e1;
+}
+
+.message__button:hover {
+  cursor: pointer;
+  background: #ffb4d0
+}
+
+.message__input:focus {
+  outline: none;
+}
+.message__input:focus::placeholder {
+  color: transparent;
+}
+.message__input::placeholder {
+  color: white;
+}
+
 .section {
   display: flex;
   flex-direction: column;
-  margin-top: 7em;
+  margin-top: 4em;
   width: 100%;
   gap: 1em;
 }
