@@ -11,14 +11,8 @@ export default function Messages() {
 //if there is a user signed in fetch the messages from the database corresponding to said user
   useEffect(() => {
     const controller = new AbortController();
-    setUser(localStorage.getItem('user'));
     if (user) {
-      const fetchMessages = async () => {
-        let msgs = await fetch(`/message/${user}`);
-        msgs = await msgs.json();
-        setMessages(msgs);
-      };
-      fetchMessages().catch(console.error);
+      
     }
     return () => controller.abort();
   }, [user]);
@@ -42,33 +36,34 @@ export default function Messages() {
     const input = messageBox.current.value;
     //checks to see if passcodes were entered and sets user if correct code is entered.
     //if message is not a passcode and user is signed in then upload message ot database
-    if (input === `hi ${REACT_APP_GPASS}`) {
-      setMsgFor(REACT_APP_GPASS);
-      setUser(REACT_APP_HPASS);
-      localStorage.setItem('user', REACT_APP_HPASS)
-      messageBox.current.value = ''
-    } else if (input === `hi ${REACT_APP_HPASS}`) {
-      setMsgFor(REACT_APP_HPASS);
-      setUser(REACT_APP_GPASS);
-      localStorage.setItem('user', REACT_APP_GPASS)
-      messageBox.current.value = ''
-    } else if (user && input.length > 4) {
-      (async function() {
-        await fetch("/message/send", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            message: input,
-            msgFor: msgFor
-          })
-        });
-        messageBox.current.value = ''
-        messageBox.current.placeholder = "message sent"
-      })();
-    }
+
+    // if (input === `hi ${REACT_APP_GPASS}`) {
+    //   setMsgFor(REACT_APP_GPASS);
+    //   setUser(REACT_APP_HPASS);
+    //   localStorage.setItem('user', REACT_APP_HPASS)
+    //   messageBox.current.value = ''
+    // } else if (input === `hi ${REACT_APP_HPASS}`) {
+    //   setMsgFor(REACT_APP_HPASS);
+    //   setUser(REACT_APP_GPASS);
+    //   localStorage.setItem('user', REACT_APP_GPASS)
+    //   messageBox.current.value = ''
+    // } else if (user && input.length > 4) {
+    //   (async function() {
+    //     await fetch("/message/send", {
+    //       method: "POST",
+    //       headers: {
+    //         Accept: "application/json",
+    //         "Content-Type": "application/json"
+    //       },
+    //       body: JSON.stringify({
+    //         message: input,
+    //         msgFor: msgFor
+    //       })
+    //     });
+    //     messageBox.current.value = ''
+    //     messageBox.current.placeholder = "message sent"
+    //   })();
+    // }
   };
 
   return (

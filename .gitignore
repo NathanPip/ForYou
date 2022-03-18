@@ -1,8 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/client/node_modules
-/server/node_modules
+/node_modules
 /.pnp
 .pnp.js
 
@@ -10,10 +9,8 @@
 /coverage
 
 # production
-/client/build
-/client/.env
-/server/db.js
-Procfile
+/build
+/.env
 
 # misc
 .DS_Store
@@ -25,3 +22,4 @@ Procfile
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+node_modules
