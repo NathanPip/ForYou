@@ -2,31 +2,31 @@ import React, { useState, useRef, useEffect } from "react";
 import { fetchMessages, sendMessage } from "../helpers/databaseFunctions";
 
 export default function Messages() {
-  const [messages, setMessages] = useState(null);
+  const [messages, setMessages] = useState([]);
   const [displayedMessages, setDisplayedMessages] = useState([]);
   const [currentMessage, setCurrentMessage] = useState("");
   const [user, setUser] = useState(null);
   const messageBox = useRef();
 
-  //FETCHES ALL MESSAGES FROM THE DATABASE, 
+  //FETCHES ALL MESSAGES FROM THE DATABASE,
   //calls the fetchMessages helper function which returns a response of all msgs data
-  //filters only msg and msgFrom data from each object in msgs data and creates a new object, 
+  //filters only msg and msgFrom data from each object in msgs data and creates a new object,
   //new object is pushed to array and, after iterations, messages state is set to said array
   useEffect(() => {
-    const controller = new AbortController();
+    const awaitValues = async () => {
     if (user) {
       let msgRes = [];
-      fetchMessages().then(msgs => {
+      await fetchMessages().then(msgs => {
         msgs.forEach(message => {
-          let msg = message.get("msg");
-          let msgFrom = message.get("msg_from");
-          msgRes.push({ msg, msgFrom });
+            let msg = message.get("msg");
+            let msgFrom = message.get("msg_from");
+            msgRes.push({ msg, msgFrom });
+          });
         });
-      });
-      setMessages(msgRes);
-      // console.log(msgRes);
+        setMessages(msgRes);
+      };
     }
-    return () => controller.abort();
+    awaitValues();
   }, [user]);
 
   //SETS THE INITIAL DISPLAYED MESSAGE, THE DISPLAYED MESSAGES ARRAY, AND THE MESSAGE ROTATION INTERVAL
@@ -43,19 +43,18 @@ export default function Messages() {
           : import.meta.env.VITE_HPASS;
       let filteredMessages = messages.filter(msg => msg.msgFrom === msgsFrom);
       setDisplayedMessages(filteredMessages);
-      setCurrentMessage(
-        filteredMessages[Math.floor(Math.random() * displayedMessages.length)]
-          .msg
-      );
+      setCurrentMessage(filteredMessages[0].msg);
       const interval = setInterval(rotateMessages, 5000);
       return () => clearInterval(interval);
     }
-  }, [user]);
+  }, [user, messages]);
 
   // SETS CURRENT MESSAGE TO A NEW RANDOM MESSAGE FROM displayedMessages
   const rotateMessages = () => {
-    const randomIndex = Math.floor(Math.random() * displayedMessages.length);
-    setCurrentMessage(displayedMessages[randomIndex].msg);
+    if (displayedMessages.length > 1) {
+      const randomIndex = Math.floor(Math.random() * displayedMessages.length);
+      setCurrentMessage(displayedMessages[randomIndex].msg);
+    }
   };
 
   //POSTS NEW MESSAGE UP TO THE DATABASE
@@ -80,11 +79,12 @@ export default function Messages() {
         try {
           await sendMessage(user, input);
           messageBox.current.value = "";
-          messageBox.current.placeholder = "Message Sent!"
+          messageBox.current.placeholder = "Message Sent!";
         } catch (err) {
-          console.log(err)
+          console.log(err);
           messageBox.current.value = "";
-          messageBox.current.placeholder = "Message Failed to send! Text Your Boi Nather"
+          messageBox.current.placeholder =
+            "Message Failed to send! Text Your Boi Nather";
         }
       };
       sendMsg();
